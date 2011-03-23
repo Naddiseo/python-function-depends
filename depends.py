@@ -1,3 +1,19 @@
+#    Function dependency decorators for python
+#    Copyright (C) 2011 Richard Eames
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    
 class FnDepend(object):
 	class Node(object):
 		def __init__(self, func, args = [], kwargs = {}):
@@ -5,8 +21,8 @@ class FnDepend(object):
 			self.args = args
 			self.kwargs = kwargs
 			self.dependencies = set([])
-			self.children     = set([])
-			self.patch        = {}
+			self.children = set([])
+			self.patch = {}
 		
 		def __eq__(self, other):
 			return self.func == other
@@ -38,7 +54,7 @@ class FnDepend(object):
 		if dependency is None:
 			raise Exception('Dependency is None')
 		
-		node   = self.get_or_set_node(func)
+		node = self.get_or_set_node(func)
 		parent = self.get_or_set_node(dependency)
 		
 		parent.add_child(node)
@@ -75,8 +91,8 @@ class FnDepend(object):
 		return wrapper
 	
 	def run(self):
-		run     = set([])
-		top     = set([])
+		run = set([])
+		top = set([])
 		new_top = set([])
 		
 		for node in self.nodes:
