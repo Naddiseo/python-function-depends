@@ -22,16 +22,23 @@ def grandchild2():
 	print "grandchild2"
 
 @d.depends_on(child2)
+@d.fdepends_on()
 def grandchild3():
 	print "grandchild3"
 
 @d.depends_on(child2)
+@d.fdepends_on()
 def grandchild4():
 	print "grandchild4"
+
+grandchild3.depends_on(grandchild4)
 
 @d.depends_on(grandchild1)
 def greatgrandchild1():
 	print "greatgrandchild1"
+
+grandchild4.depends_on(greatgrandchild1)
+
 	
 def root2():
 	print "root2"

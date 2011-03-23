@@ -86,7 +86,7 @@ class FnDepend(object):
 		while len(top):
 			#print("%s"%top)
 			for node in top:
-				if node.dependencies <= run:
+				if (not node in run) and (node.dependencies <= run):
 					new_top |= node.children
 					node.run()
 					run.add(node)
