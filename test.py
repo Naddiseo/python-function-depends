@@ -1,4 +1,4 @@
-from depend import FnDepend
+from depends import FnDepend
 
 d = FnDepend()
 
@@ -41,12 +41,14 @@ def child3():
 	print "child3"
 
 
-@d.depends_on('circ2')
+
 def circ1():
 	print "circ1"
 
 @d.depends_on(circ1)
 def circ2():
 	print "circ2"
+
+circ1 = d.depends_on(circ2)
 
 d.run()

@@ -12,15 +12,11 @@ class FnDepend(object):
 			return self.func == other
 		
 		def run(self):
-			if isinstance(self.func, basestring):
-				eval(self.func + '(*self.args, **self.kwargs)')
 			self.func(*self.args, **self.kwargs)
 		
 		def __repr__(self):
 			if self.func is None:
 				return 'NoneType'
-			elif isinstance(self.func, basestring):
-				eval(self.func + '.__name__')
 			return self.func.__name__
 		
 		def add_child(self, child):
@@ -54,7 +50,7 @@ class FnDepend(object):
 			return func
 		
 		return wrapper
-		
+	
 	def run(self):
 		run     = set([])
 		top     = set([])
