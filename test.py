@@ -41,7 +41,7 @@ def child3():
 	print "child3"
 
 
-
+@d.fdepends_on()
 def circ1():
 	print "circ1"
 
@@ -49,6 +49,6 @@ def circ1():
 def circ2():
 	print "circ2"
 
-circ1 = d.depends_on(circ2)
+circ1.depends_on(circ2)
 
 d.run()

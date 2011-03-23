@@ -34,6 +34,16 @@ class FnDepend(object):
 		self.nodes.add(node)
 		return node
 	
+	def _fwrapper(self, func, dependency):
+		if dependency is None:
+			raise Exception('Dependency is None')
+		
+		node   = self.get_or_set_node(func)
+		parent = self.get_or_set_node(dependency)
+		
+		parent.add_child(node)
+		self.nodes.add(node)
+	
 	def depends_on(self, dependency):
 		def wrapper(func):
 			if func is None:
@@ -51,6 +61,19 @@ class FnDepend(object):
 		
 		return wrapper
 	
+	def fdepends_on(self):
+		def wrapper(func):
+			if func is None:
+				raise Exception('Func is none')
+			
+			def _inner(d):
+				return apply(self._fwrapper, (func, d))
+			
+			setattr(func, 'depends_on', _inner)
+			
+			return func
+		return wrapper
+	
 	def run(self):
 		run     = set([])
 		top     = set([])
@@ -59,8 +82,9 @@ class FnDepend(object):
 		for node in self.nodes:
 			if len(node.dependencies) == 0:
 				top.add(node)
-		
+			
 		while len(top):
+			#print("%s"%top)
 			for node in top:
 				if node.dependencies <= run:
 					new_top |= node.children
